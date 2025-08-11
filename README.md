@@ -15,7 +15,7 @@
   
 ## 🚀 Установка:
 <h3 align="center">Maven:</h3>
-Добавьте в ваш `pom.xml`:
+Добавьте в ваш pom.xml:
 
 ```xml
 <repositories>
@@ -35,7 +35,7 @@
 ```
 
 <h3 align="center">Gradle:</h3>
-Добавьте в `build.gradle`:
+Добавьте в build.gradle:
 
 ```gradle
 repositories {
