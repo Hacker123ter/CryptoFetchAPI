@@ -3,8 +3,8 @@ package org.dw363.cryptofetch;
 import org.dw363.cryptofetch.currency.CryptoCurrency;
 import org.dw363.cryptofetch.manager.CryptoCacheManager;
 
-public final class Main {
-    private Main() {}
+public final class CryptoFetchAPI {
+    private CryptoFetchAPI() {}
 
     public static void init(long updateIntervalSeconds) {
         CryptoCacheManager.setUpdateInterval(updateIntervalSeconds);
