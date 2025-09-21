@@ -4,7 +4,11 @@ public enum CryptoCurrency {
     BITCOIN("bitcoin"),
     ETHEREUM("ethereum"),
     LITECOIN("litecoin"),
-    DOGECOIN("dogecoin");
+    DOGECOIN("dogecoin"),
+    FLOKI_INU("floki"),
+    SHIBA_INU("shiba-inu"),
+    BABY_DOGE_COIN("baby-doge-coin"),
+    PEPECOIN("pepecoin");
 
     private final String apiId;
 

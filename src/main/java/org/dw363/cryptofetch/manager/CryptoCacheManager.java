@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 
 public final class CryptoCacheManager {
 
-    private static final Map<CryptoCurrency, Double> CACHE = new ConcurrentHashMap<>();
+    private static final Map<CryptoCurrency, String> CACHE = new ConcurrentHashMap<>();
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "CryptoFetchAPI-AutoUpdater");
         t.setDaemon(true);
@@ -28,8 +28,8 @@ public final class CryptoCacheManager {
         }
         updateTask = SCHEDULER.scheduleAtFixedRate(() -> {
             for (CryptoCurrency currency : CACHE.keySet()) {
-                CryptoPriceFetcher.getPriceAsync(currency).thenAccept(price ->
-                        CACHE.put(currency, price)
+                CryptoPriceFetcher.getPriceStringAsync(currency).thenAccept(priceStr ->
+                        CACHE.put(currency, priceStr)
                 ).exceptionally(ex -> {
                     System.err.println("[CryptoFetchAPI] Failed to update " + currency + ": " + ex.getMessage());
                     return null;
@@ -40,11 +40,11 @@ public final class CryptoCacheManager {
 
     private CryptoCacheManager() {}
 
-    public static double getPrice(CryptoCurrency currency) {
+    public static String getPriceString(CryptoCurrency currency) {
         if (!CACHE.containsKey(currency)) {
-            CACHE.put(currency, -1.0);
-            CryptoPriceFetcher.getPriceAsync(currency).thenAccept(price ->
-                    CACHE.put(currency, price)
+            CACHE.put(currency, null); // маркер: в процессе загрузки
+            CryptoPriceFetcher.getPriceStringAsync(currency).thenAccept(priceStr ->
+                    CACHE.put(currency, priceStr)
             ).exceptionally(ex -> {
                 System.err.println("[CryptoFetchAPI] Initial fetch failed: " + ex.getMessage());
                 return null;

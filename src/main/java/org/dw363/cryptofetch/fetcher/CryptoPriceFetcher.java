@@ -18,15 +18,17 @@ public final class CryptoPriceFetcher {
             .build();
 
     private static final String API_TEMPLATE = "https://api.coingecko.com/api/v3/simple/price?ids=%s&vs_currencies=eur";
-    private static final Pattern EUR_PATTERN = Pattern.compile("\"eur\"\\s*:\\s*([0-9]+(?:\\.[0-9]+)?)");
+
+    private static final Pattern EUR_PATTERN =
+            Pattern.compile("\"eur\"\\s*:\\s*([0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)");
 
     private CryptoPriceFetcher() {}
 
-    public static double getPriceSync(CryptoCurrency currency) {
+    public static String getPriceStringSync(CryptoCurrency currency) {
         String url = String.format(API_TEMPLATE, currency.apiId());
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .header("User-Agent", "CryptoPriceLib/1.0 (+https://github.com/YourGitHubName/crypto-price-lib)")
+                .header("User-Agent", "CryptoFetchAPI/1.0.2 (+https://github.com/Hacker123ter/CryptoFetchAPI)")
                 .timeout(Duration.ofSeconds(10))
                 .GET()
                 .build();
@@ -35,20 +37,20 @@ public final class CryptoPriceFetcher {
             if (resp.statusCode() != 200) {
                 throw new CryptoPriceException("API error: HTTP " + resp.statusCode());
             }
-            return parsePrice(resp.body());
+            return parsePriceString(resp.body());
         } catch (IOException | InterruptedException e) {
             throw new CryptoPriceException("Error fetching price", e);
         }
     }
 
-    public static CompletableFuture<Double> getPriceAsync(CryptoCurrency currency) {
-        return CompletableFuture.supplyAsync(() -> getPriceSync(currency));
+    public static CompletableFuture<String> getPriceStringAsync(CryptoCurrency currency) {
+        return CompletableFuture.supplyAsync(() -> getPriceStringSync(currency));
     }
 
-    private static double parsePrice(String body) {
+    private static String parsePriceString(String body) {
         var matcher = EUR_PATTERN.matcher(body);
         if (matcher.find()) {
-            return Double.parseDouble(matcher.group(1));
+            return matcher.group(1);
         }
         throw new CryptoPriceException("EUR price not found in response: " + body);
     }
