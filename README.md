@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/release-1.0.1-green.svg)
+![Version](https://img.shields.io/badge/release-1.0.2-green.svg)
 ![API](https://img.shields.io/badge/JDK-21.0.8-blue.svg)
 
 <h3 align="center">Discord: luckytsb</h3>
@@ -29,7 +29,7 @@
     <dependency>
         <groupId>com.github.Hacker123ter</groupId>
         <artifactId>CryptoFetchAPI</artifactId>
-        <version>v1.0.1</version>
+        <version>v1.0.2</version>
     </dependency>
 </dependencies>
 ```
@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Hacker123ter:CryptoFetchAPI:v1.0.1'
+    implementation 'com.github.Hacker123ter:CryptoFetchAPI:v1.0.2'
 }
 ```
 
@@ -96,10 +96,21 @@ CryptoCacheManager.setUpdateInterval(120);
 
 ## 📋 API:
 
-- `CryptoFetchAPI.get(String currencyName)` — получить цену криптовалюты по её имени (например, "bitcoin").
-- `CryptoFetchAPI.str(String currencyName)` — получить цену с форматированием (например, "12345.67 €").
+- `CryptoFetchAPI.get(String currencyName)` — получить цену криптовалюты по её имени (например, `"bitcoin"`).
+- `CryptoFetchAPI.str(String currencyName)` — получить цену с форматированием (например, `"12345.67 €"`).
 - `CryptoCacheManager.setUpdateInterval(long seconds)` — установить интервал обновления данных.
-- `CryptoCurrency` — enum поддерживаемых валют: `BITCOIN`, `ETHEREUM`, `LITECOIN`, `DOGECOIN`.
+- `CryptoCurrency` — enum поддерживаемых валют.
+
+### Поддерживаемые криптовалюты:
+
+- **BITCOIN** (`bitcoin`)
+- **ETHEREUM** (`ethereum`)
+- **LITECOIN** (`litecoin`)
+- **DOGECOIN** (`dogecoin`)
+- **FLOKI_INU** (`floki`)
+- **SHIBA_INU** (`shiba-inu`)
+- **BABY_DOGE_COIN** (`baby-doge-coin`)
+- **PEPECOIN** (`pepecoin`)
 
 ---
 
